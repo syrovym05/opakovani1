@@ -18,37 +18,54 @@ namespace _11._9
             InitializeComponent();
             this.CenterToScreen();
             this.ShowIcon = false;
+            this.Text = "Ukol 1";
+
+            button2.Visible = false;
+            button3.Visible = false;
+            button4.Visible = false;
+            button5.Visible = false;
+            button6.Visible = false;
+            button7.Visible = false;
         }
 
-        List<int> listek = new List<int>();
-        Random rng = new Random();
+        List<int> list1 = new List<int>();
+        
 
      
 
-        void Vypis(ListBox listbox)
+        void Vypis(ListBox listbox, List<int> list)
         {
             listbox.Items.Clear();
-            foreach (int i in listek)
+            foreach (int i in list)
             {
                 listbox.Items.Add(i);
+            }
+        }
+
+        void Vypis(ListBox listbox, List<char> list)
+        {
+            listbox.Items.Clear();
+            foreach (char c in list)
+            {
+                listbox.Items.Add(c);
             }
         }
 
 
         int DruheMax()
         {
-            int max = listek[0];
-            int max2 = listek[1];
-            for (int i = 1; i < listek.Count(); i++)
+            int max = list1[0];
+            int max2 = list1[1];
+            for (int i = 1; i < list1.Count(); i++)
             {
-                if (listek[i] > max)
+                if (list1[i] > max)
                 {
                     max2 = max;
-                    max = listek[i];
+                    max = list1[i];
                 }
-                if (listek[i] > max2 && listek[i] < max)
+                if (list1[i] > max2 && list1[i] < max)
                 {
-                    max2 = listek[i];
+                    max2 = list1[i];
                 }
             }
 
@@ -57,21 +74,40 @@ namespace _11._9
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
-            int n = int.Parse(textBox1.Text);
-            listek.Clear();
-            for (int i = 0; i < n; i++)
-            {
-                listek.Add(rng.Next(-5,101));
-            }
-
-            Vypis(listBox1);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
             
+            try
+            {
+                Random rng = new Random();
+
+                int n = int.Parse(textBox1.Text);
+                list1.Clear();
+                for (int i = 0; i < n; i++)
+                {
+                    list1.Add(rng.Next(-5, 101));
+                }
+
+                Vypis(listBox1, list1);
+
+                button2.Visible = true;
+                button3.Visible = true;
+                button4.Visible = true;
+                button5.Visible = true;
+                button6.Visible = true;
+                button7.Visible = true;
+                listBox2.Items.Clear();
+                listBox3.Items.Clear();
+                listBox4.Items.Clear();
+                label1.Text = "_";
+                label2.Text = "_";
+                label3.Text = "_";
+            }
+            catch(FormatException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
+       
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -96,25 +132,25 @@ namespace _11._9
 
         private void button4_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < listek.Count(); i++)
+            for (int i = 0; i < list1.Count(); i++)
             {
-                int cislo = listek[i];
+                int cislo = list1[i];
                 if (Dokonale(cislo))
                 {
-                    while (listek.Contains(cislo))
+                    while (list1.Contains(cislo))
                     {
-                        listek.Remove(cislo);
-                        MessageBox.Show(cislo.ToString());
+                        list1.Remove(cislo);
+                        //MessageBox.Show(cislo.ToString());
                     }
                 }
             }
-            Vypis(listBox2);
-            
+            Vypis(listBox2, list1);
+
         }
 
         int CifernySoucet()
         {
-            int cislo = listek.Max();
+            int cislo = list1.Max();
             int soucet = 0;
             while(cislo >0)
             {
@@ -133,19 +169,34 @@ namespace _11._9
 
         private void button6_Click(object sender, EventArgs e)
         {
-            listek.Sort();
-            Vypis(listBox3);
+            list1.Sort();
+            Vypis(listBox3, list1);
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            label3.Text = listek.Average().ToString();
+            label3.Text = Math.Round(list1.Average(),3).ToString();
         }
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            List<char> list2 = listek;
-              
+            List<char> list2 = new List<char>();
+          
+            for(int i = 0; i < list1.Count();i++)
+            {
+                
+                if(list1[i] >= 65 && list1[i] <= 90)
+                {
+                    char znak = Convert.ToChar(list1[i]);
+                    list2.Add(znak);                   
+                }
+                else
+                {
+                    list2.Add('*');
+                }
+            }
+
+            Vypis(listBox4, list2);
         }
     }
 
