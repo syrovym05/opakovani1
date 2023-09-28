@@ -134,18 +134,22 @@ namespace _11._9
         {
             for (int i = 0; i < list1.Count(); i++)
             {
-                int cislo = list1[i];
-                if (Dokonale(cislo))
-                {
-                    while (list1.Contains(cislo))
-                    {
-                        list1.Remove(cislo);
-                        //MessageBox.Show(cislo.ToString());
-                    }
-                }
+                Smazani(list1[i]);                
             }
             Vypis(listBox2, list1);
+        }
 
+
+        void Smazani(int cislo)
+        {            
+            if (Dokonale(cislo))
+            {
+                while (list1.Contains(cislo))
+                {
+                    list1.Remove(cislo);
+                    //MessageBox.Show(cislo.ToString());
+                }
+            }
         }
 
         int CifernySoucet()
